@@ -1,131 +1,153 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PontoComStore - GEM GM Central</title>
+    <title>PontoComStore - Dicionário Local AI</title>
+    
     <link rel="manifest" href="manifest.json">
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
+    
+    <script src="data_dictionary.js"></script>
+    <script src="data_enciclopedia.js"></script>
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        :root {
-            --google-blue: #4285f4;
-            --google-green: #01875f;
-            --text-main: #202124;
-            --text-sub: #5f6368;
+        /* Store Header Styles */
+        #pwa-store-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: sans-serif;
         }
-        body {
-            margin: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fff; color: var(--text-main);
-            display: flex; justify-content: center; padding-top: 40px;
+        .store-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            text-transform: uppercase;
         }
-        .store-container { width: 90%; max-width: 400px; }
-        .app-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
-        .app-icon {
-            width: 80px; height: 80px; border-radius: 18px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .app-info h1 { margin: 0; font-size: 22px; font-weight: 500; }
-        .app-info p { margin: 2px 0; color: var(--google-green); font-size: 14px; font-weight: 500; }
+        .btn-install { background: #01875f; }
+        .btn-open { background: #4285f4; }
         
-        .stats { 
-            display: flex; justify-content: space-around; 
-            padding: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
-            margin-bottom: 25px; text-align: center; font-size: 12px;
+        /* State Handling */
+        .hidden { display: none !important; }
+        #installed-view {
+            text-align: center;
+            padding: 50px 20px;
         }
-
-        /* The Dynamic Button */
-        #main-action-btn {
-            width: 100%; padding: 12px; border-radius: 8px; border: none;
-            background-color: var(--google-green); color: white;
-            font-weight: 500; font-size: 16px; cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-abrir { background-color: var(--google-blue) !important; }
-
-        .description { margin-top: 25px; }
-        .description h2 { font-size: 16px; margin-bottom: 8px; }
-        .description p { font-size: 14px; color: var(--text-sub); line-height: 1.5; }
     </style>
 </head>
 <body>
 
-    <div class="store-container">
-        <div class="app-header">
-            <img src="icons/icon-1.png" alt="Icon" class="app-icon">
-            <div class="app-info">
-                <h1>GEM GM Central</h1>
-                <p>PontoComStore</p>
-            </div>
-        </div>
-
-        <div class="stats">
-            <div><b>4.9 ★</b><br><span style="color:var(--text-sub)">Avaliações</span></div>
-            <div><b>15 MB</b><br><span style="color:var(--text-sub)">Tamanho</span></div>
-            <div><b>Livre</b><br><span style="color:var(--text-sub)">Classificação</span></div>
-        </div>
-
-        <button id="main-action-btn">VERIFICANDO...</button>
-
-        <div class="description">
-            <h2>Sobre o app</h2>
-            <p>Plataforma completa para o GEM Guararema Central. Gerencie lições, acesse o assistente de IA e acompanhe os logs administrativos em tempo real.</p>
+<div id="pwa-store-header">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="icons/icon-1.png" style="width: 40px; border-radius: 8px;">
+        <div>
+            <div style="font-weight: bold; font-size: 14px;">PontoComStore</div>
+            <div style="font-size: 11px; color: #666;">Dicionário Local AI</div>
         </div>
     </div>
+    <button id="main-store-btn" class="store-btn btn-install">Instalar</button>
+</div>
 
-    <script>
-        let deferredPrompt;
-        const actionBtn = document.getElementById('main-action-btn');
+<div id="app-container">
+    <h2 style="text-align:center">AI Dictation & Typing</h2>
+    
+    <h3>🎤 Ditado por Voz</h3>
+    <p id="status">Clique em Iniciar para ditar...</p>
+    <div id="transcript-box" class="display-box"></div>
+    <div class="controls">
+        <button id="start-btn">Iniciar Ditado</button>
+        <button id="stop-btn" disabled>Parar</button>
+    </div>
 
-        function setButtonToAbrir() {
-            actionBtn.innerText = "ABRIR";
-            actionBtn.classList.add('btn-abrir');
-            actionBtn.onclick = () => { window.location.href = "index.html"; };
-        }
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
 
-        function setButtonToInstalar() {
-            actionBtn.innerText = "INSTALAR";
-            actionBtn.classList.remove('btn-abrir');
-            actionBtn.onclick = async () => {
+    <h3 class="ai-header"><span>🤖</span> AI Encyclopedia</h3>
+    <input type="text" id="ai-search" class="ai-search-input" placeholder="Pesquisar...">
+    <div id="ai-box" class="display-box">
+        <div id="ai-content"><i>Aguardando comando ou busca...</i></div>
+    </div>
+
+    <div id="typing-input" contenteditable="true" style="min-height: 100px; border: 1px solid #ccc; margin-top: 20px; padding: 10px;"></div>
+</div>
+
+<div id="installed-view" class="hidden">
+    <img src="icons/icon-1.png" style="width: 100px; border-radius: 20px; margin-bottom: 20px;">
+    <h2>GEM GM Central</h2>
+    <p style="color: #666;">O aplicativo já está instalado no seu dispositivo.</p>
+    <button class="store-btn btn-open" onclick="location.reload()" style="width: 200px; height: 50px;">ABRIR AGORA</button>
+</div>
+
+<script>
+    let deferredPrompt;
+    const storeBtn = document.getElementById('main-store-btn');
+    const appContainer = document.getElementById('app-container');
+    const installedView = document.getElementById('installed-view');
+
+    // 1. Check if App is already installed or running in Standalone
+    function checkPWAStatus() {
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
+                            || window.navigator.standalone 
+                            || localStorage.getItem('gem-pwa-installed') === 'true';
+
+        if (isStandalone) {
+            // Logic: Maintain button as ABRIR and CLEAN the rest
+            storeBtn.innerText = "ABRIR";
+            storeBtn.className = "store-btn btn-open";
+            
+            appContainer.classList.add('hidden'); // Clean/Hide the editor
+            installedView.classList.remove('hidden'); // Show the simple portal
+            
+            storeBtn.onclick = () => { location.reload(); };
+        } else {
+            // App is NOT installed: Show full UI and INSTALL button
+            storeBtn.innerText = "INSTALAR";
+            storeBtn.className = "store-btn btn-install";
+            appContainer.classList.remove('hidden');
+            installedView.classList.add('hidden');
+            
+            storeBtn.onclick = async () => {
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     const { outcome } = await deferredPrompt.userChoice;
                     if (outcome === 'accepted') {
                         localStorage.setItem('gem-pwa-installed', 'true');
-                        setButtonToAbrir();
+                        checkPWAStatus();
                     }
                     deferredPrompt = null;
                 } else {
-                    alert("Para instalar, toque nos três pontos do navegador e selecione 'Instalar Aplicativo' ou 'Adicionar à tela de início'.");
+                    alert("Para instalar, use o menu do seu navegador.");
                 }
             };
         }
+    }
 
-        // Deep check for installation
-        function checkStatus() {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-            const wasInstalled = localStorage.getItem('gem-pwa-installed') === 'true';
-            
-            // If already in the app OR we marked it as installed before
-            if (isStandalone || wasInstalled) {
-                setButtonToAbrir();
-            } else {
-                setButtonToInstalar();
-            }
-        }
+    // Capture the install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        checkPWAStatus();
+    });
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // If this event triggers, the browser is sure it's NOT installed yet
-            setButtonToInstalar();
-        });
+    // Handle post-install event
+    window.addEventListener('appinstalled', () => {
+        localStorage.setItem('gem-pwa-installed', 'true');
+        checkPWAStatus();
+    });
 
-        window.addEventListener('appinstalled', () => {
-            localStorage.setItem('gem-pwa-installed', 'true');
-            setButtonToAbrir();
-        });
+    // Initial check on load
+    window.addEventListener('load', checkPWAStatus);
+</script>
 
-        // Run check on load
-        window.addEventListener('load', checkStatus);
-    </script>
+<script src="main.js"></script>
+
 </body>
 </html>
