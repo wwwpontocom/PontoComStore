@@ -9,97 +9,65 @@
         :root {
             --google-blue: #4285f4;
             --google-green: #01875f;
-            --bg-light: #ffffff;
             --text-main: #202124;
             --text-sub: #5f6368;
         }
         body {
-            margin: 0; font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-light); color: var(--text-main);
-            display: flex; justify-content: center; padding-top: 50px;
+            margin: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff; color: var(--text-main);
+            display: flex; justify-content: center; padding-top: 40px;
         }
-        .store-container { width: 90%; max-width: 400px; text-align: left; }
-        
-        /* Store Header */
-        .app-header { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+        .store-container { width: 90%; max-width: 400px; }
+        .app-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
         .app-icon {
-            width: 96px; height: 96px; border-radius: 20%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); object-fit: cover;
-            border: 1px solid #eee;
+            width: 80px; height: 80px; border-radius: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .app-info h1 { margin: 0; font-size: 24px; font-weight: 500; color: #202124; }
-        .app-info p { margin: 4px 0; color: var(--google-green); font-weight: 500; font-size: 14px; }
-        .app-info .dev-name { color: var(--text-sub); font-size: 13px; font-weight: 400; }
-
-        /* Stats Row */
-        .stats-row { 
-            display: flex; justify-content: space-between; 
+        .app-info h1 { margin: 0; font-size: 22px; font-weight: 500; }
+        .app-info p { margin: 2px 0; color: var(--google-green); font-size: 14px; font-weight: 500; }
+        
+        .stats { 
+            display: flex; justify-content: space-around; 
             padding: 15px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
-            margin-bottom: 25px; text-align: center;
+            margin-bottom: 25px; text-align: center; font-size: 12px;
         }
-        .stat-item { flex: 1; border-right: 1px solid #eee; }
-        .stat-item:last-child { border-right: none; }
-        .stat-val { font-weight: bold; font-size: 14px; display: block; }
-        .stat-label { font-size: 11px; color: var(--text-sub); }
 
-        /* Action Button */
+        /* The Dynamic Button */
         #main-action-btn {
             width: 100%; padding: 12px; border-radius: 8px; border: none;
             background-color: var(--google-green); color: white;
-            font-weight: 500; font-size: 15px; cursor: pointer;
-            transition: background 0.2s; margin-bottom: 15px;
+            font-weight: 500; font-size: 16px; cursor: pointer;
+            transition: all 0.3s ease;
         }
-        #main-action-btn:active { background-color: #006b4b; transform: scale(0.98); }
-        
-        /* Secondary Buttons */
-        .btn-row { display: flex; gap: 10px; margin-bottom: 30px; }
-        .secondary-btn {
-            flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #dadce0;
-            background: white; color: var(--google-blue); font-size: 14px; font-weight: 500;
-        }
+        .btn-abrir { background-color: var(--google-blue) !important; }
 
-        /* Description */
-        .description h2 { font-size: 18px; margin-bottom: 10px; }
-        .description p { font-size: 14px; line-height: 1.6; color: var(--text-sub); }
+        .description { margin-top: 25px; }
+        .description h2 { font-size: 16px; margin-bottom: 8px; }
+        .description p { font-size: 14px; color: var(--text-sub); line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div class="store-container">
         <div class="app-header">
-            <img src="icons/icon-1.png" alt="PontoComStore Icon" class="app-icon">
+            <img src="icons/icon-1.png" alt="Icon" class="app-icon">
             <div class="app-info">
                 <h1>GEM GM Central</h1>
                 <p>PontoComStore</p>
-                <span class="dev-name">Educação Musical & Gestão</span>
             </div>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-item">
-                <span class="stat-val">4.9 ★</span>
-                <span class="stat-label">Avaliações</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-val">50+</span>
-                <span class="stat-label">Downloads</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-val">E</span>
-                <span class="stat-label">Para todos</span>
-            </div>
+        <div class="stats">
+            <div><b>4.9 ★</b><br><span style="color:var(--text-sub)">Avaliações</span></div>
+            <div><b>15 MB</b><br><span style="color:var(--text-sub)">Tamanho</span></div>
+            <div><b>Livre</b><br><span style="color:var(--text-sub)">Classificação</span></div>
         </div>
 
-        <button id="main-action-btn">INSTALAR</button>
-
-        <div class="btn-row">
-            <button class="secondary-btn">Compartilhar</button>
-            <button class="secondary-btn">Sobre</button>
-        </div>
+        <button id="main-action-btn">VERIFICANDO...</button>
 
         <div class="description">
-            <h2>Sobre este app</h2>
-            <p>Acesse as ferramentas da Plataforma GEM Guararema Central diretamente da sua home. Inclui Assistente de IA, Métodos MSA/MOO e controle de logs administrativos.</p>
+            <h2>Sobre o app</h2>
+            <p>Plataforma completa para o GEM Guararema Central. Gerencie lições, acesse o assistente de IA e acompanhe os logs administrativos em tempo real.</p>
         </div>
     </div>
 
@@ -107,57 +75,57 @@
         let deferredPrompt;
         const actionBtn = document.getElementById('main-action-btn');
 
-        // Logic to check if already installed or running as App
-        function updateButtonUI() {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
-                                || window.navigator.standalone 
-                                || localStorage.getItem('pwa-installed') === 'true';
+        function setButtonToAbrir() {
+            actionBtn.innerText = "ABRIR";
+            actionBtn.classList.add('btn-abrir');
+            actionBtn.onclick = () => { window.location.href = "index.html"; };
+        }
 
-            if (isStandalone) {
-                actionBtn.innerText = "ABRIR";
-                actionBtn.style.backgroundColor = "#4285f4"; // Blue for "Open"
+        function setButtonToInstalar() {
+            actionBtn.innerText = "INSTALAR";
+            actionBtn.classList.remove('btn-abrir');
+            actionBtn.onclick = async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        localStorage.setItem('gem-pwa-installed', 'true');
+                        setButtonToAbrir();
+                    }
+                    deferredPrompt = null;
+                } else {
+                    alert("Para instalar, toque nos três pontos do navegador e selecione 'Instalar Aplicativo' ou 'Adicionar à tela de início'.");
+                }
+            };
+        }
+
+        // Deep check for installation
+        function checkStatus() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+            const wasInstalled = localStorage.getItem('gem-pwa-installed') === 'true';
+            
+            // If already in the app OR we marked it as installed before
+            if (isStandalone || wasInstalled) {
+                setButtonToAbrir();
+            } else {
+                setButtonToInstalar();
             }
         }
 
-        // Detect PWA Installation capability
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            // If we found the prompt, it means it's NOT installed yet on this browser
-            actionBtn.innerText = "INSTALAR";
-            actionBtn.style.backgroundColor = "#01875f";
+            // If this event triggers, the browser is sure it's NOT installed yet
+            setButtonToInstalar();
         });
 
-        // Main Button Logic
-        actionBtn.addEventListener('click', async () => {
-            if (actionBtn.innerText === "ABRIR") {
-                // Redirect to the main app URL (system will prompt to open the app)
-                window.location.href = "index.html"; 
-                return;
-            }
-
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    localStorage.setItem('pwa-installed', 'true');
-                    updateButtonUI();
-                }
-                deferredPrompt = null;
-            } else {
-                alert("Para instalar, use as configurações do navegador: 'Adicionar à tela de início'.");
-            }
-        });
-
-        // Listen for successful installation
         window.addEventListener('appinstalled', () => {
-            localStorage.setItem('pwa-installed', 'true');
-            updateButtonUI();
-            deferredPrompt = null;
+            localStorage.setItem('gem-pwa-installed', 'true');
+            setButtonToAbrir();
         });
 
-        // Initial check
-        window.addEventListener('load', updateButtonUI);
+        // Run check on load
+        window.addEventListener('load', checkStatus);
     </script>
 </body>
 </html>
