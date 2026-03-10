@@ -177,7 +177,16 @@
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         function checkStatus() {
+            // Priority: If installed, show 'Abrir'. If not installed but prompt exists, show 'Instalar'. 
+            // Default: Show 'Abrir' so the user isn't stuck with no button.
             if (isStandalone || localStorage.getItem('pwa-installed') === 'true') {
+                btnInstalar.style.display = 'none';
+                btnAbrir.style.display = 'block';
+            } else if (deferredPrompt) {
+                btnInstalar.style.display = 'block';
+                btnAbrir.style.display = 'none';
+            } else {
+                // Fallback for browsers where prompt hasn't fired yet or isn't supported
                 btnInstalar.style.display = 'none';
                 btnAbrir.style.display = 'block';
             }
@@ -186,10 +195,7 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            if (!isStandalone) {
-                btnInstalar.style.display = 'block';
-                btnAbrir.style.display = 'none';
-            }
+            checkStatus();
         });
 
         btnInstalar.addEventListener('click', async () => {
@@ -209,7 +215,11 @@
             checkStatus();
         });
 
+        // Check on load to set initial state
         window.addEventListener('load', checkStatus);
+        
+        // Final safety check after a short delay
+        setTimeout(checkStatus, 500);
     </script>
 </body>
 </html>
