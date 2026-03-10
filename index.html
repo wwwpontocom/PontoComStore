@@ -8,20 +8,20 @@
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            /* Custom Palette: Deep Navy & Electric Blue (Non-Google) */
-            --brand-bg: #0f172a;
-            --brand-accent: #38bdf8;
-            --brand-success: #10b981;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
+            /* Light Mode Palette: Professional & High Contrast */
+            --brand-bg: #ffffff;
+            --brand-accent: #0284c7;
+            --brand-text: #1e293b;
+            --brand-subtext: #64748b;
+            --card-bg: #ffffff;
+            --grid-bg: #f1f5f9;
         }
 
         body {
             margin: 0;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--brand-bg);
-            color: var(--text-primary);
+            color: var(--brand-text);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,72 +32,74 @@
             width: 90%;
             max-width: 380px;
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            padding: 30px;
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 40px 30px;
+            border-radius: 40px;
+            /* Professional shadow instead of flat border */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
             text-align: center;
+            border: 1px solid #f1f5f9;
         }
 
         .app-icon {
-            width: 90px;
-            height: 90px;
+            width: 96px;
+            height: 96px;
             border-radius: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-            border: 2px solid var(--brand-accent);
+            object-fit: cover;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
         }
 
-        h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-        .provider { color: var(--brand-accent); font-weight: 600; font-size: 13px; margin-top: 4px; text-transform: uppercase; }
+        h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.8px; }
+        .provider { color: var(--brand-accent); font-weight: 700; font-size: 13px; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Unique Stats Layout: Vertical Grid instead of horizontal bars */
+        /* Stats Layout: Clean Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 25px 0;
+            gap: 12px;
+            margin: 30px 0;
         }
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 16px;
+            background: var(--grid-bg);
+            padding: 14px;
+            border-radius: 20px;
             font-size: 12px;
+            color: var(--brand-subtext);
         }
-        .stat-card b { display: block; font-size: 16px; color: var(--brand-accent); }
+        .stat-card b { display: block; font-size: 18px; color: var(--brand-text); margin-bottom: 2px; }
 
-        /* Unified Action Button */
-        .action-area { height: 55px; margin-top: 10px; }
+        /* Action Buttons */
+        .action-area { height: 58px; margin-top: 15px; }
         
         #btn-instalar, #btn-abrir {
             width: 100%;
             height: 100%;
-            border-radius: 14px;
+            border-radius: 18px;
             border: none;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
+            transition: all 0.2s ease;
             display: none;
         }
 
         #btn-instalar {
             background: linear-gradient(135deg, #0ea5e9, #2563eb);
             color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         #btn-abrir {
-            background: transparent;
-            border: 2px solid var(--brand-accent);
-            color: var(--brand-accent);
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            color: var(--brand-text);
         }
 
-        #btn-instalar:active, #btn-abrir:active { transform: scale(0.96); }
+        #btn-instalar:active, #btn-abrir:active { transform: scale(0.97); }
 
-        .description { text-align: left; margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
-        .description h2 { font-size: 15px; color: var(--text-secondary); margin-bottom: 10px; }
-        .description p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+        .description { text-align: left; margin-top: 35px; border-top: 1px solid #f1f5f9; padding-top: 25px; }
+        .description h2 { font-size: 14px; color: var(--brand-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .description p { font-size: 14px; color: var(--brand-subtext); line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
@@ -108,8 +110,8 @@
         <div class="provider">PontoComStore</div>
 
         <div class="stats-grid">
-            <div class="stat-card"><b>4.9</b>Avaliação</div>
-            <div class="stat-card"><b>PWA</b>Plataforma</div>
+            <div class="stat-card"><b>4.9 ★</b>Avaliação</div>
+            <div class="stat-card"><b>PWA</b>Formato</div>
             <div class="stat-card" style="grid-column: span 2;"><b>Guararema Central</b>Localização</div>
         </div>
 
@@ -119,8 +121,8 @@
         </div>
 
         <div class="description">
-            <h2>DETALHES</h2>
-            <p>Ecossistema administrativo e educacional para instrutores GEM. Inclui módulos de teoria, prática instrumental e suporte inteligente.</p>
+            <h2>Detalhes da Plataforma</h2>
+            <p>Acesse o ecossistema completo para instrutores e alunos. Ferramentas de teoria musical, cronogramas e o Assistente de IA integrados.</p>
         </div>
     </div>
 
@@ -131,7 +133,6 @@
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         function checkStatus() {
-            // Priority check: are we already inside the installed app?
             if (isStandalone || localStorage.getItem('pwa-installed') === 'true') {
                 btnInstalar.style.display = 'none';
                 btnAbrir.style.display = 'block';
