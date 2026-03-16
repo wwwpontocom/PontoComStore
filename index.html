@@ -8,6 +8,7 @@
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
+            /* Light Mode Palette: Professional & High Contrast */
             --brand-bg: #ffffff;
             --brand-accent: #0284c7;
             --brand-text: #1e293b;
@@ -28,123 +29,77 @@
         }
 
         .store-wrapper {
-            width: 95%;
-            /* INCREASED WIDTH STILL MORE: 600px */
-            max-width: 600px; 
+            width: 90%;
+            max-width: 380px;
             background: var(--card-bg);
-            /* HIGH PADDING MAINTAINED */
-            padding: 60px 110px; 
-            border-radius: 50px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.07);
+            padding: 40px 30px;
+            border-radius: 40px;
+            /* Professional shadow instead of flat border */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
             text-align: center;
             border: 1px solid #f1f5f9;
-            box-sizing: border-box;
         }
 
         .app-icon {
-            width: 84px;
-            height: 84px;
-            border-radius: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            width: 96px;
+            height: 96px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
         }
 
-        h1 { 
-            margin: 0; 
-            font-size: 24px; /* Increased for wider layout */
-            font-weight: 800; 
-            letter-spacing: -0.5px; 
-            line-height: 1.2;
-        }
+        h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.8px; }
+        .provider { color: var(--brand-accent); font-weight: 700; font-size: 13px; margin-top: 6px; text-transform: ; letter-spacing: 1px; }
 
-        .provider { 
-            color: var(--brand-accent); 
-            font-weight: 700; 
-            font-size: 12px; 
-            margin-top: 10px; 
-            text-transform: ; 
-            letter-spacing: 2px; 
-        }
-
+        /* Stats Layout: Clean Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin: 35px 0;
+            margin: 30px 0;
         }
-
         .stat-card {
             background: var(--grid-bg);
-            padding: 18px;
+            padding: 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--brand-subtext);
         }
+        .stat-card b { display: block; font-size: 18px; color: var(--brand-text); margin-bottom: 2px; }
 
-        .stat-card b { 
-            display: block; 
-            font-size: 16px; 
-            color: var(--brand-text); 
-            margin-bottom: 4px;
-        }
-
-        .action-area { min-height: 60px; margin-top: 15px; }
+        /* Action Buttons */
+        .action-area { height: 58px; margin-top: 15px; }
         
         #btn-instalar, #btn-abrir {
             width: 100%;
-            padding: 20px;
+            height: 100%;
             border-radius: 18px;
             border: none;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: none;
-            letter-spacing: 0.5px;
         }
 
         #btn-instalar {
             background: linear-gradient(135deg, #0ea5e9, #2563eb);
             color: white;
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         #btn-abrir {
-            background: #ffffff;
-            border: 2px solid var(--grid-bg);
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
             color: var(--brand-text);
         }
 
-        #btn-instalar:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        #btn-instalar:active, #btn-abrir:active { transform: scale(0.97); }
 
-        .description { 
-            text-align: left; 
-            margin-top: 35px; 
-            border-top: 1px solid #f1f5f9; 
-            padding-top: 25px; 
-        }
-
-        .description h2 { 
-            font-size: 12px; 
-            color: var(--brand-text); 
-            text-transform: uppercase; 
-            margin-bottom: 10px; 
-            letter-spacing: 1px;
-        }
-
-        .description p { 
-            font-size: 13px; 
-            color: var(--brand-subtext); 
-            line-height: 1.6; 
-            margin: 0; 
-        }
-
-        @media (max-width: 650px) {
-            .store-wrapper { padding: 50px 60px; }
-        }
-        @media (max-width: 400px) {
-            .store-wrapper { padding: 40px 30px; border-radius: 30px; }
-        }
+        .description { text-align: left; margin-top: 35px; border-top: 1px solid #f1f5f9; padding-top: 25px; }
+        .description h2 { font-size: 14px; color: var(--brand-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .description p { font-size: 14px; color: var(--brand-subtext); line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
@@ -155,8 +110,9 @@
         <div class="provider">PontoComStore</div>
 
         <div class="stats-grid">
-            <div class="stat-card"><b>GEM</b>Grupo de Estudos Musicais</div>
-            <div class="stat-card"><b>Localidade</b>Guararema Central</div>
+            <div class="stat-card"><b>Grupo de Estudos Musicais</b>GEM</div>
+            <div class="stat-card"><b>Guararema Central</b>Localidade</div>
+          
         </div>
 
         <div class="action-area">
@@ -165,8 +121,8 @@
         </div>
 
         <div class="description">
-            <h2>Sobre</h2>
-            <p>Plataforma para instrutores. Teoria musical, cronogramas e Assistente de IA integrados.</p>
+            <h2>Detalhes da Plataforma</h2>
+            <p>Acesse a Plataforma para instrutores. Ferramentas de teoria musical, cronogramas e o Assistente de IA integrados.</p>
         </div>
     </div>
 
@@ -177,16 +133,7 @@
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
         function checkStatus() {
-            // Priority: If installed, show 'Abrir'. If not installed but prompt exists, show 'Instalar'. 
-            // Default: Show 'Abrir' so the user isn't stuck with no button.
             if (isStandalone || localStorage.getItem('pwa-installed') === 'true') {
-                btnInstalar.style.display = 'none';
-                btnAbrir.style.display = 'block';
-            } else if (deferredPrompt) {
-                btnInstalar.style.display = 'block';
-                btnAbrir.style.display = 'none';
-            } else {
-                // Fallback for browsers where prompt hasn't fired yet or isn't supported
                 btnInstalar.style.display = 'none';
                 btnAbrir.style.display = 'block';
             }
@@ -195,7 +142,10 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            checkStatus();
+            if (!isStandalone) {
+                btnInstalar.style.display = 'block';
+                btnAbrir.style.display = 'none';
+            }
         });
 
         btnInstalar.addEventListener('click', async () => {
@@ -215,12 +165,7 @@
             checkStatus();
         });
 
-        // Check on load to set initial state
         window.addEventListener('load', checkStatus);
-        
-        // Final safety check after a short delay
-        setTimeout(checkStatus, 500);
     </script>
 </body>
 </html>
-
