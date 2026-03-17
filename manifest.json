@@ -1,0 +1,24 @@
+{
+  "name": "Plataforma GEM GM Central",
+  "short_name": "GEM GM",
+  "description": "Portal de Estudos Musicais e Gestão Guararema Central",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0284c7",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon-1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
