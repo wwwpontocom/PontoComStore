@@ -3,169 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PontoComStore - GEM GM Central</title>
+    <title>Instalador PWA - GEM</title>
     
     <link rel="manifest" href="manifest.json">
+    
     <style>
-        :root {
-            /* Light Mode Palette: Professional & High Contrast */
-            --brand-bg: #ffffff;
-            --brand-accent: #0284c7;
-            --brand-text: #1e293b;
-            --brand-subtext: #64748b;
-            --card-bg: #ffffff;
-            --grid-bg: #f1f5f9;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--brand-bg);
-            color: var(--brand-text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .store-wrapper {
-            width: 90%;
-            max-width: 380px;
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 40px;
-            /* Professional shadow instead of flat border */
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-            text-align: center;
-            border: 1px solid #f1f5f9;
-        }
-
-        .app-icon {
-            width: 96px;
-            height: 96px;
-            border-radius: 24px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
-        }
-
-        h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.8px; }
-        .provider { color: var(--brand-accent); font-weight: 700; font-size: 13px; margin-top: 6px; text-transform: ; letter-spacing: 1px; }
-
-        /* Stats Layout: Clean Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 30px 0;
-        }
-        .stat-card {
-            background: var(--grid-bg);
-            padding: 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--brand-subtext);
-        }
-        .stat-card b { display: block; font-size: 18px; color: var(--brand-text); margin-bottom: 2px; }
-
-        /* Action Buttons */
-        .action-area { height: 58px; margin-top: 15px; }
-        
-        #btn-instalar, #btn-abrir {
-            width: 100%;
-            height: 100%;
-            border-radius: 18px;
-            border: none;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: none;
-        }
-
+        /* CSS Necessário para o posicionamento e estilo do botão */
         #btn-instalar {
-            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            display: none; /* Inicia escondido, a lógica JS o revela */
+            background: #27ae60;
             color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        #btn-abrir {
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            color: var(--brand-text);
-        }
-
-        #btn-instalar:active, #btn-abrir:active { transform: scale(0.97); }
-
-        .description { text-align: left; margin-top: 35px; border-top: 1px solid #f1f5f9; padding-top: 25px; }
-        .description h2 { font-size: 14px; color: var(--brand-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-        .description p { font-size: 14px; color: var(--brand-subtext); line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
 
-    <div class="store-wrapper">
-        <img src="icons/icon-1.png" alt="GEM Icon" class="app-icon">
-        <h1>Plataforma GEM GM Central</h1>
-        <div class="provider">PontoComStore</div>
-
-        <div class="stats-grid">
-            <div class="stat-card"><b>Grupo de Estudos Musicais</b>GEM</div>
-            <div class="stat-card"><b>Guararema Central</b>Localidade</div>
-          
-        </div>
-
-        <div class="action-area">
-            <button id="btn-instalar">INSTALAR PORTAL</button>
-            <button id="btn-abrir" onclick="window.location.href='index.html'">ABRIR APLICATIVO</button>
-        </div>
-
-        <div class="description">
-            <h2>Detalhes da Plataforma</h2>
-            <p>Acesse a Plataforma para instrutores. Ferramentas de teoria musical, cronogramas e o Assistente de IA integrados.</p>
-        </div>
-    </div>
+    <button id="btn-instalar">INSTALAR APLICATIVO</button>
 
     <script>
         let deferredPrompt;
         const btnInstalar = document.getElementById('btn-instalar');
-        const btnAbrir = document.getElementById('btn-abrir');
-        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-        function checkStatus() {
-            if (isStandalone || localStorage.getItem('pwa-installed') === 'true') {
-                btnInstalar.style.display = 'none';
-                btnAbrir.style.display = 'block';
-            }
-        }
-
+        // 1. Escuta o evento que indica que o app pode ser instalado
         window.addEventListener('beforeinstallprompt', (e) => {
+            // Previne o banner padrão do navegador
             e.preventDefault();
+            // Guarda o evento para ser disparado pelo nosso botão
             deferredPrompt = e;
-            if (!isStandalone) {
-                btnInstalar.style.display = 'block';
-                btnAbrir.style.display = 'none';
-            }
+            // Mostra o nosso botão customizado
+            btnInstalar.style.display = 'block';
         });
 
+        // 2. Lógica de clique no botão
         btnInstalar.addEventListener('click', async () => {
             if (deferredPrompt) {
+                // Mostra o prompt de instalação
                 deferredPrompt.prompt();
+                
+                // Verifica a escolha do usuário
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    localStorage.setItem('pwa-installed', 'true');
-                    checkStatus();
-                }
+                console.log(`Escolha do usuário: ${outcome}`);
+                
+                // Limpa o prompt (só pode ser usado uma vez)
                 deferredPrompt = null;
+                // Esconde o botão após o uso
+                btnInstalar.style.display = 'none';
             }
         });
 
+        // 3. Esconde o botão se o app já estiver instalado
         window.addEventListener('appinstalled', () => {
-            localStorage.setItem('pwa-installed', 'true');
-            checkStatus();
+            btnInstalar.style.display = 'none';
+            deferredPrompt = null;
+            console.log('PWA instalado com sucesso!');
         });
 
-        window.addEventListener('load', checkStatus);
+        // 4. Registro do Service Worker (Essencial para PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker ativo!', reg))
+                    .catch(err => console.log('Erro ao registrar SW', err));
+            });
+        }
     </script>
 </body>
 </html>
